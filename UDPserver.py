@@ -44,7 +44,6 @@ if pkt_rcv[2] == "S=1":
             ready = select.select([serverSocket],[],[],3)
             if ready[0]:
                 pkt_rcv, clientAddr = pkrecv()
-
                 fin = pkt_rcv.split(';')
                 if fin[2]== "F=1":
                     #ack = ack+1
@@ -61,7 +60,6 @@ if pkt_rcv[2] == "S=1":
                     if int(fin[1].partition('=')[2]) == seq: 
                         serverSocket.close()
                         exit()
-
                 elif loss_cnt != 4:
                     print(pkt_rcv)
                     pkt = pkt_rcv.split(';')
