@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     # start a server
     subprocess.Popen([
-        'python', 'server.py',
+        'python', './components/server.py',
         '--n_channels', str(n_channels),
         '--pkt_loss_rate', str(pkt_loss_rate),
         '--svr_base_port', str(svr_base_port),
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     time.sleep(3)    # wait until the server is up and running
     for i in range(n_channels):
         subprocess.Popen([
-            'python', 'channel.py',
+            'python', './components/channel.py',
             '--pkt_loss_rate', str(pkt_loss_rate),
             '--svr_base_port', str(svr_base_port),
             '--ch_base_port', str(ch_base_port),
@@ -92,7 +92,7 @@ if __name__ == '__main__':
     # start a client
     time.sleep(3)    # wait until the channels are up and running
     subprocess.Popen([
-        'python', 'client.py',
+        'python', './components/client.py',
         '--n_channels', str(n_channels),
         '--ch_base_port', str(ch_base_port),
         '--cl_base_port', str(cl_base_port),

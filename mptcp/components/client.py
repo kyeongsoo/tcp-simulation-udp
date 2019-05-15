@@ -18,7 +18,7 @@ def client(n_channels, ch_base_port, cl_base_port, n_pkts):
         cl_skt[i] = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         cl_skt[i].bind(cl_addr[i])
         print("CL{0:d}: The client is up and listening.".format(i))
-    
+        
     # send a request message to the server through channels
     rqst = "Request"
     for i in range(n_channels):

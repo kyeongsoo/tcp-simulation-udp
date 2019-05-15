@@ -8,7 +8,7 @@ serverAddress = ("127.0.0.1", 5100)
 
 
 def server(n_channels, pkt_loss_rate, svr_base_port, ch_base_port, cl_base_port,
-         n_pkts):
+           n_pkts):
     ch_addr = [None]*n_channels
     svr_addr = [None]*n_channels
     svr_skt = [None]*n_channels
@@ -21,16 +21,6 @@ def server(n_channels, pkt_loss_rate, svr_base_port, ch_base_port, cl_base_port,
         svr_skt[i] = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         svr_skt[i].bind(svr_addr[i])
         print("SVR{0:d}: The server is up and listening.".format(i))
-
-    # # create and bind a server socket
-    # svr_skt = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-    # svr_skt.bind(serverAddress)
-    # print("SVR: The server is up and listening.")
-
-    # # create a list of pairs of channel address and port
-    # ch_addr = []
-    # for i in range(n_channels):
-    #     ch_addr.append(("127.0.0.1", base_port+i))
 
     # process 'Request' message
     while True:
@@ -71,7 +61,6 @@ def server(n_channels, pkt_loss_rate, svr_base_port, ch_base_port, cl_base_port,
                         print("SVR{0:d}: ACK SN={1:d}".format(i, ack_sn))
 
             if ack_sn == sn:    # acked
-                # print("SVR: ACKED!")  # DEBUG
                 break         # exit from the while loop
             else:             # retransmission
                 n_rtxs += 1
@@ -80,10 +69,9 @@ def server(n_channels, pkt_loss_rate, svr_base_port, ch_base_port, cl_base_port,
                     print("SVR{0:d}: Sent {1} to {2}".format(i, tx_msg, ch_addr[i]))
 
     # save the results to a file
-    fname = "mctcp_plr-{0:.1f}_ch-{1:d}.out".format(pkt_loss_rate, n_channels)
+    fname = "./output/mptcp_plr-{0:.1f}_ch-{1:d}.out".format(pkt_loss_rate, n_channels)
     with open(fname, 'w') as file:
         file.write("plt={0:.1f},ch={1:d},n_rtxs={2:d}".format(pkt_loss_rate, n_channels, n_rtxs))
-    # return n_rtxs               # return number of retransmissions
 
 
 if __name__ == '__main__':
@@ -132,8 +120,3 @@ if __name__ == '__main__':
 
     # run the server
     server(n_channels, pkt_loss_rate, svr_base_port, ch_base_port, cl_base_port, n_pkts)
-
-    # # save the results to a file
-    # fname = "mctcp_plr-{0:.1f}_ch-{1:d}.out".format(pkt_loss_rate, n_channels)
-    # with open(fname, 'w') as file:
-    #     file.write("plt={0:.1f},ch={1:d},n_rtxs={2:d}".format(pkt_loss_rate, n_channels, n_rtxs))
